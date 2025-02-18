@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+    <question type="multichoice">
+        <name>
+            <text>Đây là format câu trả lời lồng vào trong, nhiều đáp án</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là format câu trả lời lồng vào trong, nhiều đáp án</text>
+        </questiontext>
+        <answer fraction="50">
+            <text>A</text>
+        </answer>
+        <answer fraction="50">
+            <text>B</text>
+        </answer>
+        <answer fraction="0">
+            <text>C</text>
+        </answer>
+        <answer fraction="0">
+            <text>D</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là câu hỏi lồng vào trong, ít hơn 4 lựa chọn</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là câu hỏi lồng vào trong, ít hơn 4 lựa chọn</text>
+        </questiontext>
+        <answer fraction="0">
+            <text>A</text>
+        </answer>
+        <answer fraction="100">
+            <text>C</text>
+        </answer>
+        <answer fraction="0">
+            <text>D</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là câu hỏi nhiều hơn 4 lựa chọn?</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là câu hỏi nhiều hơn 4 lựa chọn?</text>
+        </questiontext>
+        <answer fraction="0">
+            <text>B</text>
+        </answer>
+        <answer fraction="100">
+            <text>C</text>
+        </answer>
+        <answer fraction="0">
+            <text>D</text>
+        </answer>
+        <answer fraction="0">
+            <text>F</text>
+        </answer>
+        <answer fraction="0">
+            <text>I</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là dạng câu hỏi với đáp án đặt bên ngoài, nhiều đáp án?</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là dạng câu hỏi với đáp án đặt bên ngoài, nhiều đáp án?</text>
+        </questiontext>
+        <answer fraction="0">
+            <text>A</text>
+        </answer>
+        <answer fraction="0">
+            <text>B</text>
+        </answer>
+        <answer fraction="0">
+            <text>C</text>
+        </answer>
+        <answer fraction="0">
+            <text>D</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là dạng câu hỏi với đáp án đặt bên ngoài, 1 đáp án</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là dạng câu hỏi với đáp án đặt bên ngoài, 1 đáp án</text>
+        </questiontext>
+        <answer fraction="0">
+            <text>A</text>
+        </answer>
+        <answer fraction="0">
+            <text>B</text>
+        </answer>
+        <answer fraction="0">
+            <text>C</text>
+        </answer>
+        <answer fraction="0">
+            <text>D</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là câu hỏi với đáp án được bôi đậm</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là câu hỏi với đáp án được bôi đậm</text>
+        </questiontext>
+        <answer fraction="100">
+            <text>A</text>
+        </answer>
+        <answer fraction="0">
+            <text>B</text>
+        </answer>
+        <answer fraction="0">
+            <text>C</text>
+        </answer>
+        <answer fraction="0">
+            <text>D</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là câu hỏi với đáp án màu chữ đỏ</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là câu hỏi với đáp án màu chữ đỏ</text>
+        </questiontext>
+        <answer fraction="0">
+            <text>A</text>
+        </answer>
+        <answer fraction="100">
+            <text>B</text>
+        </answer>
+        <answer fraction="0">
+            <text>C</text>
+        </answer>
+        <answer fraction="0">
+            <text>D</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là câu hỏi với đáp án được gạch chân</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là câu hỏi với đáp án được gạch chân</text>
+        </questiontext>
+        <answer fraction="0">
+            <text>A</text>
+        </answer>
+        <answer fraction="0">
+            <text>B</text>
+        </answer>
+        <answer fraction="100">
+            <text>C</text>
+        </answer>
+        <answer fraction="0">
+            <text>D</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là câu hỏi Đây là câu hỏi với đáp án được in nghiêng</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là câu hỏi Đây là câu hỏi với đáp án được in nghiêng</text>
+        </questiontext>
+        <answer fraction="0">
+            <text>A</text>
+        </answer>
+        <answer fraction="0">
+            <text>B</text>
+        </answer>
+        <answer fraction="0">
+            <text>C</text>
+        </answer>
+        <answer fraction="100">
+            <text>Đáp án đúng</text>
+        </answer>
+    </question>
+    <question type="multichoice">
+        <name>
+            <text>Đây là câu Đây là câu hỏi với đáp án được gạch chân</text>
+        </name>
+        <questiontext format="html">
+            <text>Đây là câu Đây là câu hỏi với đáp án được gạch chân</text>
+        </questiontext>
+        <answer fraction="50">
+            <text>A</text>
+        </answer>
+        <answer fraction="0">
+            <text>B</text>
+        </answer>
+        <answer fraction="0">
+            <text>C</text>
+        </answer>
+        <answer fraction="50">
+            <text>D</text>
+        </answer>
+    </question>
+</quiz>
