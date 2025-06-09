@@ -200,4 +200,24 @@
             <text>D</text>
         </answer>
     </question>
+    <question type="multichoice">
+        <name>
+            <text>hai</text>
+        </name>
+        <questiontext format="html">
+            <text>hai</text>
+        </questiontext>
+        <answer fraction="100">
+            <text>q</text>
+        </answer>
+        <answer fraction="0">
+            <text>qs</text>
+        </answer>
+        <answer fraction="0">
+            <text>qsd</text>
+        </answer>
+        <answer fraction="0">
+            <text>qc</text>
+        </answer>
+    </question>
 </quiz>

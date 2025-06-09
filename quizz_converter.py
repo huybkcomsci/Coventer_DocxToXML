@@ -5,6 +5,8 @@ import re
 from docx import Document
 from docx.shared import RGBColor
 import os
+import platform
+import subprocess  
 
 class QuizzConverter:
     def __init__(self, root):
@@ -14,7 +16,7 @@ class QuizzConverter:
         
         self.create_widgets()
         self.input_file_path = ""
-        self.questions = []  # To store questions dynamically
+        self.questions = []  
     
     def create_widgets(self):
         main_frame = ttk.Frame(self.root, padding="20")
@@ -95,8 +97,8 @@ class QuizzConverter:
         if self.input_file_path:
             self.lbl_input_file.config(text=self.input_file_path)
             self.log_message(f"Đã chọn file: {self.input_file_path}")
-            self.questions = self.parse_file()  # Parse file after selecting it
-            self.populate_questions_list()  # Populate the list of questions
+            self.questions = self.parse_file() 
+            self.populate_questions_list()  
     
     def log_message(self, message):
         self.log.config(state=tk.NORMAL)
@@ -139,19 +141,23 @@ class QuizzConverter:
         if answer_match:
             answer_line = answer_match.group()
         
+        
+        question_pattern = re.compile(r'^(Câu hỏi|Câu|Bài) (\d+):\s*(.*)', re.IGNORECASE)
+        
         for para in doc.paragraphs:
             text = para.text.strip()
             if not text:
                 continue
             
-            if re.fullmatch(r'Câu hỏi \d+:.+', text, re.IGNORECASE):
+         
+            match = question_pattern.match(text)
+            if match:
                 if current_question:
                     questions.append(current_question)
                 
-                match = re.match(r'Câu hỏi (\d+):\s*(.*)', text, re.IGNORECASE)
                 current_question = {
-                    'id': int(match.group(1)),
-                    'text': match.group(2),
+                    'id': int(match.group(2)),
+                    'text': match.group(3),
                     'options': [],
                     'correct': [],
                     'explicit_answer': False
@@ -202,8 +208,75 @@ class QuizzConverter:
                 content = f.read()
             return self.parse_text(content)
     
+    def parse_text(self, content):
+        questions = []
+        current_question = None
+        answer_line = None
+        
+        # Tìm dòng đáp án cuối cùng nếu có
+        lines = content.split('\n')
+        if lines:
+            last_line = lines[-1].strip()
+            if re.search(r'(\d+[A-Z]+)+$', last_line):
+                answer_line = last_line
+                lines = lines[:-1]  # Loại bỏ dòng đáp án
+        
+
+        question_pattern = re.compile(r'^(Câu hỏi|Câu|Bài) (\d+):\s*(.*)', re.IGNORECASE)
+        
+        for line in lines:
+            text = line.strip()
+            if not text:
+                continue
+            
+
+            match = question_pattern.match(text)
+            if match:
+                if current_question:
+                    questions.append(current_question)
+                
+                current_question = {
+                    'id': int(match.group(2)),
+                    'text': match.group(3),
+                    'options': [],
+                    'correct': [],
+                    'explicit_answer': False
+                }
+                continue
+            
+            if current_question:
+                option_match = re.fullmatch(r'([A-Z])\.\s*.+', text, re.IGNORECASE)
+                if option_match:
+                    letter = option_match.group(1).upper()
+                    option_text = re.sub(r'^[A-Z]\.\s*', '', text)
+                    current_question['options'].append((letter, option_text))
+                    continue
+                
+                answer_match = re.match(r'Đáp án đúng:\s*([A-Z,\s]+)', text, re.IGNORECASE)
+                if answer_match:
+                    answers = re.findall(r'[A-Z]', answer_match.group(1).upper())
+                    current_question['correct'] = answers
+                    current_question['explicit_answer'] = True
+        
+        if current_question:
+            questions.append(current_question)
+        
+        if answer_line:
+            answer_dict = {}
+            matches = re.finditer(r'(\d+)([A-Z]+)', answer_line)
+            for match in matches:
+                qid = int(match.group(1))
+                answers = list(match.group(2).upper())
+                answer_dict[qid] = answers
+            
+            for question in questions:
+                if not question['explicit_answer'] and not question['correct']:
+                    question['correct'] = answer_dict.get(question['id'], [])
+        
+        return questions
+    
     def populate_questions_list(self):
-        """Populate the list of questions into the Treeview."""
+
         for row in self.questions_listbox.get_children():
             self.questions_listbox.delete(row)
         
@@ -350,32 +423,49 @@ class QuizzConverter:
         return xml_content
     
     def convert_file(self):
-        if not self.input_file_path:
-            messagebox.showerror("Lỗi", "Vui lòng chọn file đầu vào!")
+        if not self.input_file_path and not self.questions:
+            messagebox.showerror("Lỗi", "Không có câu hỏi nào để chuyển đổi!")
             return
         
         try:
-            # Use the questions that have been added or edited
+            # Tạo nội dung XML
             xml_content = self.generate_xml_content(self.questions)
             
-            # Tạo thư mục OUTPUT
-            output_dir = os.path.join(os.path.dirname(self.input_file_path), "OUTPUT")
-            os.makedirs(output_dir, exist_ok=True)
+            # Cho phép người dùng chọn nơi lưu file
+            file_types = [('XML files', '*.xml'), ('All files', '*.*')]
+            output_path = filedialog.asksaveasfilename(
+                title="Lưu file XML",
+                filetypes=file_types,
+                defaultextension=".xml"
+            )
             
-            # Tạo tên file đầu ra
-            base_name = os.path.splitext(os.path.basename(self.input_file_path))[0]
-            output_path = os.path.join(output_dir, f"{base_name}_quiz.xml")
+            # Nếu người dùng hủy
+            if not output_path:
+                return
             
+            # Lưu file XML
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(xml_content)
             
             messagebox.showinfo("Thành công", f"Đã tạo file XML thành công!\n{output_path}")
             self.log_message(f"Đã xuất file thành công: {output_path}")
-            os.startfile(output_dir)
+            
+
         
         except Exception as e:
             messagebox.showerror("Lỗi", f"Lỗi khi xử lý file:\n{str(e)}")
             self.log_message(f"Lỗi: {str(e)}")
+        def open_directory(self, path):
+
+            try:
+                if platform.system() == "Windows":
+                    os.startfile(path)
+                elif platform.system() == "Darwin":  # macOS
+                    subprocess.Popen(["open", path])
+                else:  # Linux và các hệ điều hành khác
+                    subprocess.Popen(["xdg-open", path])
+            except Exception as e:
+                self.log_message(f"Không thể mở thư mục: {str(e)}")
 
 if __name__ == "__main__":
     root = tk.Tk()

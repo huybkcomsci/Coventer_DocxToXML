@@ -1,0 +1,3 @@
+([('QuizConverter',
+   '/Users/jun/Downloads/WORKSPACE/tes/testing/Coventer_DocxToXML/dist/QuizConverter',
+   'EXECUTABLE')],)
